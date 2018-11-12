@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:wasa_inventory/fragments/first_fragment.dart';
 import 'package:wasa_inventory/fragments/second_fragment.dart';
 import 'package:wasa_inventory/fragments/third_fragment.dart';
-
+import 'package:wasa_inventory/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class DrawerItem {
   String title;
   IconData icon;
   DrawerItem(this.title, this.icon);
 }
+
+    Future<User> getUser() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      User user = prefs.get("user");
+      return user;
+    }
+
 
 class HomePage extends StatefulWidget {
   final drawerItems = [

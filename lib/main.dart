@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 import 'dart:io';
-
 import 'package:wasa_inventory/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   runApp(new MyApp());
 }
@@ -48,13 +48,13 @@ class Post {
 
 
 class User {
-  final String user_id;
-  final String role_id;
-  final String role_name;
+   String user_id;
+   String role_id;
+   String role_name;
   final String access_level;
 
   final String full_name;
-  final String email;
+   String email;
   final String mobile;
   final String warehouse_id;
   final String warehouse_name;
@@ -298,8 +298,8 @@ class _MyHomePageState extends State<MyHomePage> {
     http.Response response = await http.post("http://123.49.33.106/dhaka_wasa/admin/login", body: {'username': email, 'password': pass}); // post api call
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
-     //final Post data = Post.fromJson(json.decode(response.body));
-
+     final Post data = Post.fromJson(json.decode(response.body));
+      _saveValues(data.user);
      setState(() {
        _state = 2;
      });
@@ -325,6 +325,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
     }
+  }
+
+
+  _saveValues(User user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("user", user.toString());
   }
 
 
