@@ -299,7 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
      final Post data = Post.fromJson(json.decode(response.body));
-      _saveValues(data.user);
+      //_saveValues(data.user);
      setState(() {
        _state = 2;
      });
@@ -328,10 +328,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  _saveValues(User user) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("user", user.toString());
-  }
+//  _saveValues(User user) async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    prefs.setString("user", user.toString());
+//  }
 
 
   Future<bool> connectivity() async {
@@ -445,6 +445,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+  _saveValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("name", "");
+    prefs.setString("phone", "");
+  }
 
+  getSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    nameController.text = prefs.getString("name");
+//    phoneController.text = prefs.getString("phone");
+  }
 
 }
