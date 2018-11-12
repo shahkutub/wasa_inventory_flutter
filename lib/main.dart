@@ -4,8 +4,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:wasa_inventory/main.dart';
 import 'package:connectivity/connectivity.dart';
+import 'dart:io';
+
+import 'package:wasa_inventory/pages/home_page.dart';
 void main() {
   runApp(new MyApp());
 }
@@ -127,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _autoValidate = false;
   String _email;
   String password;
-
+  int _state = 0;
   @override
   Widget build(BuildContext context) {
 
@@ -182,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 decoration: new InputDecoration(
                   hintText: "Password",
+
                 ),
               ),
             ),
@@ -193,12 +196,16 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 50.0,
               child :  new RaisedButton(
                 textColor: Colors.white,
-                child: const Text(' Sign In   '),
+                //child: const Text(' Sign In   '),
                 color: Theme.of(context).accentColor,
                 elevation: 8.0,
                 splashColor: Colors.blueGrey,
-                onPressed: _sendToServer,
-                // onPressed: () => toast_show(),
+                //onPressed: _sendToServer,
+                child: setUpButtonChild(),
+                onPressed: () {
+
+                  _sendToServer();
+                },
 
 //            onPressed: () {
 //              return showDialog(
@@ -225,6 +232,36 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+  Widget setUpButtonChild() {
+    if (_state == 0) {
+      return new Text(
+        " Sign In",
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+      );
+    } else if (_state == 1) {
+      return CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      );
+    } else {
+      return Icon(Icons.check, color: Colors.white);
+    }
+  }
+
+  void animateButton() {
+    setState(() {
+      _state = 1;
+    });
+
+//    Timer(Duration(milliseconds: 3300), () {
+//      setState(() {
+//        _state = 2;
+//      });
+//    });
+  }
+
   static Future<Map> postData(Map data) async {
     http.Response res = await http.post("", body: {'Email': 'doodle', 'color': 'blue'}); // post api call
     Map data = json.decode(res.body);
@@ -232,22 +269,58 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Post> fetchPost(String email,String pass) async {
-    //final response = await http.get('https://jsonplaceholder.typicode.com/posts/1');
+
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('no connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // Retrieve the text the user has typed in using our
+            // TextEditingController
+            content: Text("No Internet Connection!"),
+          );
+        },
+      );
+    }
+
+    setState(() {
+      if (_state == 0) {
+        animateButton();
+      }
+    });
+
     http.Response response = await http.post("http://123.49.33.106/dhaka_wasa/admin/login", body: {'username': email, 'password': pass}); // post api call
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
-     final Post data = Post.fromJson(json.decode(response.body));
+     //final Post data = Post.fromJson(json.decode(response.body));
 
-            return showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    // Retrieve the text the user has typed in using our
-                    // TextEditingController
-                    content: Text(data.user.warehouse_name),
-                  );
-                },
-              );
+     setState(() {
+       _state = 2;
+     });
+//            return showDialog(
+//                context: context,
+//                builder: (context) {
+//                  return AlertDialog(
+//                    // Retrieve the text the user has typed in using our
+//                    // TextEditingController
+//                    content: Text(data.user.warehouse_name),
+//                  );
+//                },
+//              );
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+//      Navigator.push(
+//        context,
+//        MaterialPageRoute(builder: (context) => HomePage()),
+//      );
+      //dispose();
+
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
@@ -255,21 +328,31 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+  Future<bool> connectivity() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+    }
+  }
 
   void toast_show() {
     showToast("content");
   }
 
-  void _showToast(BuildContext context) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: const Text('Added to favorite'),
-        action: SnackBarAction(
-            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
-  }
+//  void _showToast(BuildContext context) {
+//    final scaffold = Scaffold.of(context);
+//    scaffold.showSnackBar(
+//      SnackBar(
+//        content: const Text('Added to favorite'),
+//        action: SnackBarAction(
+//            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+//      ),
+//    );
+//  }
 
 
   String validateName(String value) {
@@ -327,20 +410,23 @@ class _MyHomePageState extends State<MyHomePage> {
       print("Email $_email");
       print("Password $password");
 
-      if(!connectivity()){
-              return showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    // Retrieve the text the user has typed in using our
-                    // TextEditingController
-                    content: Text("No internet connection!"),
-                  );
-                },
-              );
-      }else{
-        fetchPost(_email,password);
-      }
+      fetchPost(_email,password);
+
+
+//      if(!connectivity()){
+//              return showDialog(
+//                context: context,
+//                builder: (context) {
+//                  return AlertDialog(
+//                    // Retrieve the text the user has typed in using our
+//                    // TextEditingController
+//                    content: Text("No internet connection!"),
+//                  );
+//                },
+//              );
+//      }else{
+//
+//      }
 
 
 
