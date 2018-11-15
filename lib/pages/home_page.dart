@@ -78,7 +78,12 @@ class HomePageState extends State<HomePage> {
         child: new Column(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-                accountName: new Text("John Doe"), accountEmail: null),
+                currentAccountPicture: const CircleAvatar(
+                  backgroundImage: NetworkImage('https://avatars2.githubusercontent.com/u/17681888?s=400&u=010445b61e6af342689d0dbf6fd81e47563d0c8c&v=4'),
+
+                ),
+                accountName: new Text(""),
+                accountEmail: new Text("John Doe")),
             new Column(children: drawerOptions)
           ],
         ),

@@ -122,6 +122,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  Post data;
   TextEditingController emailController = new TextEditingController();
   TextEditingController passWordController = new TextEditingController();
 
@@ -457,5 +458,5 @@ class _MyHomePageState extends State<MyHomePage> {
 //    phoneController.text = prefs.getString("phone");
   }
 
-  
+
 }
