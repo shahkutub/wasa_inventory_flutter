@@ -8,6 +8,8 @@ import 'package:connectivity/connectivity.dart';
 import 'dart:io';
 import 'package:wasa_inventory/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasa_inventory/utils/Appconstant.dart';
+import 'package:wasa_inventory/utils/SharedPreferencesTest.dart';
 void main() {
   runApp(new MyApp());
 }
@@ -304,6 +306,10 @@ class _MyHomePageState extends State<MyHomePage> {
      setState(() {
        _state = 2;
      });
+
+     SharedPreferencesTest.setString(Appconstant.name,data.user.full_name);
+     //saveUserData(data.user.full_name,data.user.warehouse_name);
+
 //            return showDialog(
 //                context: context,
 //                builder: (context) {
@@ -456,6 +462,18 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 //    nameController.text = prefs.getString("name");
 //    phoneController.text = prefs.getString("phone");
+  }
+
+
+  SharedPreferences sharedPreferences;
+  saveUserData(String name,String warehouse) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+
+      sharedPreferences.setString("username", name);
+      sharedPreferences.setString("warehouse", warehouse);
+      sharedPreferences.commit();
+    });
   }
 
 

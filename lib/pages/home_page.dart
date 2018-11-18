@@ -5,6 +5,8 @@ import 'package:wasa_inventory/fragments/second_fragment.dart';
 import 'package:wasa_inventory/fragments/third_fragment.dart';
 import 'package:wasa_inventory/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasa_inventory/utils/Appconstant.dart';
+import 'package:wasa_inventory/utils/SharedPreferencesTest.dart';
 class DrawerItem {
   String title;
   IconData icon;
@@ -16,6 +18,8 @@ class DrawerItem {
       User user = prefs.get("user");
       return user;
     }
+
+
 
 
 class HomePage extends StatefulWidget {
@@ -33,6 +37,13 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedDrawerIndex = 0;
+  String name,warehouse;
+
+  Future<String> getSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString("name");
+  }
+
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
@@ -68,6 +79,9 @@ class HomePageState extends State<HomePage> {
       );
     }
 
+
+
+
     return new Scaffold(
       appBar: new AppBar(
         // here we display the title corresponding to the fragment
@@ -82,8 +96,8 @@ class HomePageState extends State<HomePage> {
                   backgroundImage: NetworkImage('https://avatars2.githubusercontent.com/u/17681888?s=400&u=010445b61e6af342689d0dbf6fd81e47563d0c8c&v=4'),
 
                 ),
-                accountName: new Text(""),
-                accountEmail: new Text("John Doe")),
+                accountName: new Text(name.toString()),
+                accountEmail: new Text("ghghg")),
             new Column(children: drawerOptions)
           ],
         ),
@@ -91,4 +105,7 @@ class HomePageState extends State<HomePage> {
       body: _getDrawerItemWidget(_selectedDrawerIndex),
     );
   }
+
+
+
 }
