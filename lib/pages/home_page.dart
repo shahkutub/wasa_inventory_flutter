@@ -84,9 +84,26 @@ class HomePageState extends State<HomePage> {
 
     return new Scaffold(
       appBar: new AppBar(
+
+        actions: <Widget>[
+
+          IconButton(
+            icon: Image.asset('images/wasa.png'),
+
+            onPressed: () {
+            },
+          ),
+
+        ],
+//        leading: IconButton(
+//          tooltip: 'Previous choice',
+//          icon: const Icon(Icons.arrow_back),
+//
+//        ),
         // here we display the title corresponding to the fragment
         // you can instead choose to have a static title
-        title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
+        //title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
+
       ),
       drawer: new Drawer(
         child: new Column(
