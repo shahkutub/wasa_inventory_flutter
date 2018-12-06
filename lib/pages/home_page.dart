@@ -86,23 +86,38 @@ class HomePageState extends State<HomePage> {
       appBar: new AppBar(
 
         actions: <Widget>[
+          Row(
+            children: [
+              Column(
+                children: <Widget>[
+                  Text("0"),
+                  IconButton(
+                      icon: Image.asset('images/wasa.png',height: 40,width: 40),
+                        tooltip: "hh",
 
-          IconButton(
-            icon: Image.asset('images/wasa.png'),
+                        onPressed: () {
+                        },
+                      ),
+                ],
+              ),
 
-            onPressed: () {
-            },
+              Column(
+                children: <Widget>[
+                  Text("0"),
+                  IconButton(
+                    icon: Image.asset('images/wasa.png',height: 40,width: 40),
+                    tooltip: "hh",
+
+                    onPressed: () {
+                    },
+                  ),
+                ],
+              ),
+            ],
+
           ),
 
         ],
-//        leading: IconButton(
-//          tooltip: 'Previous choice',
-//          icon: const Icon(Icons.arrow_back),
-//
-//        ),
-        // here we display the title corresponding to the fragment
-        // you can instead choose to have a static title
-        //title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
 
       ),
       drawer: new Drawer(
