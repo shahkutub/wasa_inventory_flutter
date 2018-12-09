@@ -5,8 +5,7 @@ import 'package:wasa_inventory/fragments/second_fragment.dart';
 import 'package:wasa_inventory/fragments/third_fragment.dart';
 import 'package:wasa_inventory/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wasa_inventory/utils/Appconstant.dart';
-import 'package:wasa_inventory/utils/SharedPreferencesTest.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class DrawerItem {
   String title;
   IconData icon;
@@ -81,37 +80,130 @@ class HomePageState extends State<HomePage> {
 
 
 
-
     return new Scaffold(
       appBar: new AppBar(
 
-        actions: <Widget>[
-          Row(
-            children: [
-              Column(
-                children: <Widget>[
-                  Text("0"),
-                  IconButton(
-                      icon: Image.asset('images/wasa.png',height: 40,width: 40),
-                        tooltip: "hh",
 
-                        onPressed: () {
-                        },
-                      ),
+        actions: <Widget>[
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new GestureDetector(
+                      onTap: (){
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FirstFragment()));
+                      },
+                      child: new Container(
+                        child: new Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage('https://avatars2.githubusercontent.com/u/17681888?s=400&u=010445b61e6af342689d0dbf6fd81e47563d0c8c&v=4'),
+                              ),
+                              new Text(
+                                "Sadi",
+                              ),
+                            ]
+                        ),
+                      )
+                  ),
                 ],
               ),
 
-              Column(
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("0"),
-                  IconButton(
-                    icon: Image.asset('images/wasa.png',height: 40,width: 40),
-                    tooltip: "hh",
+                  new GestureDetector(
+                      onTap: (){
+                       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FirstFragment()));
+                       },
+                  child: new Container(
+                  child: new Column(
+                  children: [
+                    new Text("0"),
 
-                    onPressed: () {
-                    },
+                    Icon(
+                    Icons.notifications,
+                    size:22,
+                    color: Colors.deepOrange,
+                  ),
+                  new Text(
+                    "Requisition",
+                  ),
+                ]
+                  ),
+                )
+              ),
+                ],
+                  ),
+
+              new Container(
+                padding: const EdgeInsets.only(right: 5.0),
+
+              ),
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new GestureDetector(
+                      onTap: (){
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FirstFragment()));
+                      },
+                      child: new Container(
+                        child: new Column(
+                            children: [
+                              new Text("0"),
+
+                              Icon(
+                                Icons.notifications,
+                                size:22,
+                                color: Colors.deepPurple,
+                              ),
+                              new Text(
+                                "Stock transfer",
+                              ),
+                            ]
+                        ),
+                      )
                   ),
                 ],
+              ),
+
+              new Container(
+                padding: const EdgeInsets.only(right: 5.0),
+
+              ),
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new GestureDetector(
+                      onTap: (){
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FirstFragment()));
+                      },
+                      child: new Container(
+                        child: new Column(
+                            children: [
+                              new Text("0"),
+
+                              Icon(
+                                Icons.notifications,
+                                size:22,
+                                color: Colors.amber,
+                              ),
+                              new Text(
+                                "Loan",
+                              ),
+                            ]
+                        ),
+                      )
+                  ),
+                ],
+              ),
+              new Container(
+                padding: const EdgeInsets.only(right: 15.0),
+
               ),
             ],
 
