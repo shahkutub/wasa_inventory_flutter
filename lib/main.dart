@@ -8,8 +8,10 @@ import 'package:connectivity/connectivity.dart';
 import 'dart:io';
 import 'package:wasa_inventory/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasa_inventory/pages/home_page_drower.dart';
 import 'package:wasa_inventory/utils/Appconstant.dart';
 import 'package:wasa_inventory/utils/SharedPreferencesTest.dart';
+import 'package:wasa_inventory/utils/globals.dart';
 void main() {
   runApp(new MyApp());
 }
@@ -123,6 +125,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  bool checkValue = false;
+
+  SharedPreferences sharedPreferences;
+
 
   Post data;
   TextEditingController emailController = new TextEditingController();
@@ -305,10 +312,13 @@ class _MyHomePageState extends State<MyHomePage> {
       //_saveValues(data.user);
      setState(() {
        _state = 2;
+       _onChanged(true,data.user.full_name,data.user.warehouse_name);
      });
 
-     SharedPreferencesTest.setString(Appconstant.name,data.user.full_name);
-     //saveUserData(data.user.full_name,data.user.warehouse_name);
+
+
+//     SharedPreferencesTest.setString(Appconstant.name,data.user.full_name);
+//     saveUserData(data.user.full_name,data.user.warehouse_name);
 
 //            return showDialog(
 //                context: context,
@@ -321,7 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //                },
 //              );
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePageDrawer()));
 //      Navigator.push(
 //        context,
 //        MaterialPageRoute(builder: (context) => HomePage()),
@@ -335,10 +345,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+
+
 //  _saveValues(User user) async {
 //    SharedPreferences prefs = await SharedPreferences.getInstance();
 //    prefs.setString("user", user.toString());
 //  }
+
 
 
   Future<bool> connectivity() async {
@@ -465,7 +478,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  SharedPreferences sharedPreferences;
+
+
   saveUserData(String name,String warehouse) async {
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
@@ -476,5 +490,35 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  _onChanged(bool value,String username,String warehouse) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      checkValue = value;
+      sharedPreferences.setBool("check", checkValue);
+      sharedPreferences.setString("username", username);
+      sharedPreferences.setString("warehouse", warehouse);
+      sharedPreferences.commit();
+     // getCredential();
+    });
+  }
+
+  getCredential() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      checkValue = sharedPreferences.getBool("check");
+      if (checkValue != null) {
+        if (checkValue) {
+          String warehouse= sharedPreferences.getString("warehouse");
+          String username = sharedPreferences.getString("username");
+
+        } else {
+
+          sharedPreferences.clear();
+        }
+      } else {
+        checkValue = false;
+      }
+    });
+  }
 
 }

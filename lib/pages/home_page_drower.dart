@@ -21,7 +21,7 @@ class DrawerItem {
 
 
 
-class HomePage extends StatefulWidget {
+class HomePageDrawer extends StatefulWidget {
   final drawerItems = [
     new DrawerItem("Requisition Recommend", Icons.dehaze),
     new DrawerItem("Requisition Approved", Icons.dehaze),
@@ -36,20 +36,45 @@ class HomePage extends StatefulWidget {
     new DrawerItem("Loan Approved/Review/Reject", Icons.dehaze)
   ];
 
+
+
+
   @override
   State<StatefulWidget> createState() {
-    return new HomePageState();
+    return new HomePageDrawerState();
   }
 }
 
-class HomePageState extends State<HomePage> {
-  int _selectedDrawerIndex = 0;
+
+
+class HomePageDrawerState extends State<HomePageDrawer> {
   String name,warehouse;
 
-  Future<String> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString("name");
+  SharedPreferences sharedPreferences;
+  getCredential() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      bool checkValue = sharedPreferences.getBool("check");
+      if (checkValue != null) {
+        if (checkValue) {
+          String warehouse= sharedPreferences.getString("warehouse");
+          String username = sharedPreferences.getString("username");
+
+        } else {
+
+          sharedPreferences.clear();
+        }
+      } else {
+        checkValue = false;
+      }
+    });
   }
+
+
+
+
+  int _selectedDrawerIndex = 0;
+
 
 
   _getDrawerItemWidget(int pos) {
@@ -234,22 +259,205 @@ class HomePageState extends State<HomePage> {
 
       ),
       drawer: new Drawer(
-        child: new Column(
+
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
           children: <Widget>[
-            new UserAccountsDrawerHeader(
+        new UserAccountsDrawerHeader(
                 currentAccountPicture: const CircleAvatar(
                   backgroundImage: NetworkImage('https://avatars2.githubusercontent.com/u/17681888?s=400&u=010445b61e6af342689d0dbf6fd81e47563d0c8c&v=4'),
 
                 ),
-                accountName: new Text(name.toString()),
-                accountEmail: new Text("ghghg")),
-            new Column(
+
+          accountName: new Text(""),
+          accountEmail: new Text(""),
+
+        ),
+
+    new Column(
                 children: drawerOptions
 
             ),
+//            ListTile(
+//              title: Text('Item 1'),
+//              onTap: () {
+//                // Update the state of the app
+//                // ...
+//                // Then close the drawer
+//                Navigator.pop(context);
+//              },
+//            ),
+//            ListTile(
+//              title: Text('Item 2'),
+//              onTap: () {
+//                // Update the state of the app
+//                // ...
+//                // Then close the drawer
+//                Navigator.pop(context);
+//              },
+//            ),
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
+//        ListTile(
+//          title: Text('Item 2'),
+//          onTap: () {
+//            // Update the state of the app
+//            // ...
+//            // Then close the drawer
+//            Navigator.pop(context);
+//          },
+//        ),
 
           ],
         ),
+
+//        child: new Column(
+//          children: <Widget>[
+//            new UserAccountsDrawerHeader(
+//                currentAccountPicture: const CircleAvatar(
+//                  backgroundImage: NetworkImage('https://avatars2.githubusercontent.com/u/17681888?s=400&u=010445b61e6af342689d0dbf6fd81e47563d0c8c&v=4'),
+//
+//                ),
+//                accountName: new Text(name.toString()),
+//                accountEmail: new Text("ghghg")),
+////            new Column(
+////                children: drawerOptions
+////
+////            ),
+//
+//
+//
+//
+//            LayoutBuilder(
+//              builder: (BuildContext context, BoxConstraints viewportConstraints) {
+//                return SingleChildScrollView(
+//                  child: ConstrainedBox(
+//                    constraints: BoxConstraints(
+//                      minHeight: viewportConstraints.maxHeight,
+//                    ),
+//                    child: Column(
+//                      children: <Widget>[
+//                        ListTile(
+//                          leading: new Icon(Icons.dehaze),
+//                          title: new Text("Requisition"),
+//                        ),
+//
+//                        ListTile(
+//                          leading: new Icon(Icons.dehaze),
+//                          title: new Text("Requisition"),
+//                        ),
+//
+//                        ListTile(
+//                          leading: new Icon(Icons.dehaze),
+//                          title: new Text("Requisition"),
+//                        ),
+//
+//
+//                        ListTile(
+//                          leading: new Icon(Icons.dehaze),
+//                          title: new Text("Requisition"),
+//                        ),
+//
+//
+//                        ListTile(
+//                          leading: new Icon(Icons.dehaze),
+//                          title: new Text("Requisition"),
+//                        ),
+//
+////                        Container(
+////                          // A fixed-height child.
+////
+////                          color: Colors.yellow,
+////                          height: 120.0,
+////                        ),
+////                        Container(
+////                          // Another fixed-height child.
+////                          color: Colors.green,
+////                          height: 120.0,
+////                        ),
+//                      ],
+//                    ),
+//                  ),
+//                );
+//              },
+//            )
+//
+//
+//
+//          ],
+//        ),
 
       ),
       body: _getDrawerItemWidget(_selectedDrawerIndex),
