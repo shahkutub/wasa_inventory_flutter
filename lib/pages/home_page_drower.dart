@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:wasa_inventory/fragments/dashboard_fragment.dart';
 import 'package:wasa_inventory/fragments/first_fragment.dart';
+import 'package:wasa_inventory/fragments/home_fragment.dart';
 import 'package:wasa_inventory/fragments/second_fragment.dart';
 import 'package:wasa_inventory/fragments/third_fragment.dart';
 import 'package:wasa_inventory/main.dart';
@@ -46,9 +48,17 @@ class HomePageDrawer extends StatefulWidget {
 }
 
 
-
+String name='';
+String warehouse='';
 class HomePageDrawerState extends State<HomePageDrawer> {
-  String name,warehouse;
+
+  @override
+  void initState() {
+    super.initState();
+    getCredential();
+  }
+
+  //String name,warehouse;
 
   SharedPreferences sharedPreferences;
   getCredential() async {
@@ -57,8 +67,8 @@ class HomePageDrawerState extends State<HomePageDrawer> {
       bool checkValue = sharedPreferences.getBool("check");
       if (checkValue != null) {
         if (checkValue) {
-          String warehouse= sharedPreferences.getString("warehouse");
-          String username = sharedPreferences.getString("username");
+           warehouse= sharedPreferences.getString("warehouse");
+           name = sharedPreferences.getString("username");
 
         } else {
 
@@ -80,7 +90,7 @@ class HomePageDrawerState extends State<HomePageDrawer> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new FirstFragment();
+        return new DhshBoardFragment();
       case 1:
         return new SecondFragment();
       case 2:
@@ -271,8 +281,8 @@ class HomePageDrawerState extends State<HomePageDrawer> {
 
                 ),
 
-          accountName: new Text(""),
-          accountEmail: new Text(""),
+          accountName: new Text(name),
+          accountEmail: new Text(warehouse),
 
         ),
 
