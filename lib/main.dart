@@ -87,6 +87,7 @@ class User {
       full_name: json['full_name'],
       email: json['email'],
       mobile: json['mobile'],
+      warehouse_id: json['warehouse_id'],
       warehouse_name: json['warehouse_name'],
       division_id: json['division_id'],
       division_name: json['division_name'],
@@ -312,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //_saveValues(data.user);
      setState(() {
        _state = 2;
-       _onChanged(true,data.user.full_name,data.user.warehouse_name);
+       _onChanged(true,data.user.full_name,data.user.warehouse_name,data.user.warehouse_id);
      });
 
 
@@ -490,13 +491,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  _onChanged(bool value,String username,String warehouse) async {
+  _onChanged(bool value,String username,String warehouse,String warehouseid) async {
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       checkValue = value;
       sharedPreferences.setBool("check", checkValue);
       sharedPreferences.setString("username", username);
       sharedPreferences.setString("warehouse", warehouse);
+      sharedPreferences.setString("warehouseid", warehouseid);
       sharedPreferences.commit();
      // getCredential();
     });

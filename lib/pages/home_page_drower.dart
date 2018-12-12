@@ -179,7 +179,7 @@ class HomePageDrawerState extends State<HomePageDrawer> {
                   child: new Container(
                   child: new Column(
                   children: [
-                    new Text("0"),
+                    new Text("10"),
 
                     Icon(
                     Icons.notifications,

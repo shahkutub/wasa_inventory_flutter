@@ -144,7 +144,7 @@ class HomePageState extends State<HomePage> {
                   child: new Container(
                   child: new Column(
                   children: [
-                    new Text("0"),
+                    new Text("10"),
 
                     Icon(
                     Icons.notifications,
