@@ -154,6 +154,7 @@ class HomePageDrawerState extends State<HomePageDrawer> {
                         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FirstFragment()));
                       },
                       child: new Container(
+                        margin: EdgeInsets.only(right: 10),
                         child: new Row(
                             children: [
                               CircleAvatar(

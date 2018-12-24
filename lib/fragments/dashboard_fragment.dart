@@ -23,10 +23,10 @@ String purches='';
 double stock;
 String gatepass='';
 
-
+bool _progressBarActive = true;
 class DhshBoardFragmentState extends State<DhshBoardFragment> {
 
-  bool _progressBarActive = false;
+
   Color _defultColor = Colors.blue;
   Color _allColor = Colors.black26;
 
@@ -48,6 +48,7 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
           name = sharedPreferences.getString("username");
           warehouseid = sharedPreferences.getString("warehouseid");
           print("warehouseid"+warehouseid);
+
           fetchPost(warehouseid);
 
 
@@ -81,9 +82,12 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
                     onTap: () {
                       setState(() {
                         if (_defultColor == Colors.black26) {
-                          fetchPost(warehouseid);
+
                           _defultColor = Colors.blue;
                           _allColor = Colors.black26;
+
+                          fetchPost(warehouseid);
+                          //_progressBarActive = false;
 
                         }
 
@@ -361,14 +365,14 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
             ],
           ),
 
-          Row(
-
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-          _progressBarActive == true?const CircularProgressIndicator():new Container()
-            ],
-
-          )
+//          Row(
+//
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//          _progressBarActive == true?const CircularProgressIndicator():new Container()
+//            ],
+//
+//          )
 
         ],
       ),
@@ -378,6 +382,58 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
 
     );
   }
+
+
+  void _onLoading() {
+
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+//            new Container(
+//              height: 40.0,
+//              width: 50.0,
+//              padding: EdgeInsets.only(left: 5.0,top: 20.0,right: 0.0,bottom: 20.0),
+//            ),
+            new CircularProgressIndicator(
+              backgroundColor: Colors.black12,
+            ),
+//            new Text("Loading"
+//            ),
+          ],
+
+        )
+//      child: new Dialog(
+//        child: new Row(
+//          mainAxisAlignment: MainAxisAlignment.start,
+//          children: [
+//
+//            new Container(
+//              height: 40.0,
+//              width: 50.0,
+//              padding: EdgeInsets.only(left: 5.0,top: 20.0,right: 0.0,bottom: 20.0),
+//            ),
+//            new CircularProgressIndicator(
+//              backgroundColor: Colors.black12,
+//            ),
+//            new Text("Loading"
+//            ),
+//          ],
+//        ),
+//      ),
+    );
+
+    new Future.delayed(new Duration(seconds: 3), () {
+      Navigator.pop(context); //pop dialog
+      //_login();
+    });
+  }
+
+
 
    Future<DashBoardResponse> fetchPost(String warehouse_id) async {
 
@@ -400,9 +456,11 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
       );
     }
 
-    setState(() {
-      _progressBarActive == true;
-    });
+    _onLoading();
+
+//    setState(() {
+//      _progressBarActive == false;
+//    });
 
     http.Response response = await http.post("http://123.49.33.106/dhaka_wasa/admin/dashboard", body: {'warehouse_id': warehouse_id}); // post api call
     if (response.statusCode == 200) {
@@ -413,7 +471,7 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
 
 
       setState(() {
-        _progressBarActive == false;
+        //_progressBarActive == false;
         purches = data.data.total_purchase_order;
         stock = data.data.total_stock_value;
         gatepass = data.data.total_gate_pass;
