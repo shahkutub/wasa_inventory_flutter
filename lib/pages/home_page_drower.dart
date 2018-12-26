@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wasa_inventory/fragments/dashboard_fragment.dart';
 import 'package:wasa_inventory/fragments/first_fragment.dart';
 import 'package:wasa_inventory/fragments/home_fragment.dart';
+import 'package:wasa_inventory/fragments/piechart.dart';
 import 'package:wasa_inventory/fragments/second_fragment.dart';
 import 'package:wasa_inventory/fragments/third_fragment.dart';
 import 'package:wasa_inventory/main.dart';
@@ -92,7 +93,7 @@ class HomePageDrawerState extends State<HomePageDrawer> {
       case 0:
         return new DhshBoardFragment();
       case 1:
-        return new SecondFragment();
+        return new DonutPieChart();
       case 2:
         return new ThirdFragment();
       case 3:

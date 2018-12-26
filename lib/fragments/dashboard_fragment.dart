@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasa_inventory/fragments/piechart.dart';
 import 'package:wasa_inventory/main.dart';
 import 'package:http/http.dart' as http;
 
@@ -362,18 +363,17 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
                   ),
                 ],
               ),
+
+
             ],
           ),
+          new Row(
+            children: <Widget>[
+              new DonutPieChart(),
 
-//          Row(
-//
-//            mainAxisAlignment: MainAxisAlignment.center,
-//            children: <Widget>[
-//          _progressBarActive == true?const CircularProgressIndicator():new Container()
-//            ],
-//
-//          )
+            ],
 
+          )
         ],
       ),
 
