@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:wasa_inventory/fragments/bidirectionalscroll.dart';
 import 'package:wasa_inventory/fragments/dashboard_fragment.dart';
 import 'package:wasa_inventory/fragments/first_fragment.dart';
 import 'package:wasa_inventory/fragments/home_fragment.dart';
 import 'package:wasa_inventory/fragments/piechart.dart';
+import 'package:wasa_inventory/fragments/requisition_issue.dart';
 import 'package:wasa_inventory/fragments/second_fragment.dart';
+import 'package:wasa_inventory/fragments/test.dart';
 import 'package:wasa_inventory/fragments/third_fragment.dart';
 import 'package:wasa_inventory/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,10 +29,10 @@ class DrawerItem {
 
 class HomePageDrawer extends StatefulWidget {
   final drawerItems = [
+    new DrawerItem("Home", Icons.dehaze),
+    new DrawerItem("Requisition Issue", Icons.dehaze),
     new DrawerItem("Requisition Recommend", Icons.dehaze),
     new DrawerItem("Requisition Approved", Icons.dehaze),
-    new DrawerItem("Requisition Issue", Icons.dehaze),
-
     new DrawerItem("Stock Transfer Approved", Icons.dehaze),
     new DrawerItem("Stock Trans Recomm Req Approved", Icons.dehaze),
     new DrawerItem("Stock Transfer Issue", Icons.dehaze),
@@ -93,9 +96,9 @@ class HomePageDrawerState extends State<HomePageDrawer> {
       case 0:
         return new DhshBoardFragment();
       case 1:
-        return new DonutPieChart();
+        return new Requisition_issue();
       case 2:
-        return new ThirdFragment();
+        return new Bidirectional();
       case 3:
         return new ThirdFragment();
       case 4:

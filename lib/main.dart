@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -13,6 +14,7 @@ import 'package:wasa_inventory/utils/Appconstant.dart';
 import 'package:wasa_inventory/utils/SharedPreferencesTest.dart';
 import 'package:wasa_inventory/utils/globals.dart';
 void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new MyApp());
 }
 

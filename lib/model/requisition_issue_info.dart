@@ -1,0 +1,8 @@
+class RequisitionIsueeInfo {
+  final int userId;
+  final int id;
+  final String title;
+  final String body;
+
+  RequisitionIsueeInfo(this.userId, this.id, this.title, this.body);
+}

@@ -20,13 +20,16 @@ class DonutPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      List<charts.Series> seriesList;
-
+     double width = MediaQuery.of(context).size.width;
      bool animate;
-
      return  Container(
+       height: 200.0,
+       width:width,
+
+
        child: Center(
-         child: Row(
-           crossAxisAlignment: CrossAxisAlignment.center,
+         child: ListView(
+           scrollDirection: Axis.horizontal,
            children: <Widget>[
              SizedBox(
                child: charts.PieChart(
@@ -38,11 +41,11 @@ class DonutPieChart extends StatelessWidget {
 
             arcRendererDecorators: [
           new charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.outside)
+              labelPosition: charts.ArcLabelPosition.inside)
         ])
                ),
-               height: 200.0,
-               width: 200.0,
+               height: 220.0,
+               width: 220.0,
              ),
              SizedBox(
                child: charts.PieChart(
@@ -54,11 +57,11 @@ class DonutPieChart extends StatelessWidget {
 
     arcRendererDecorators: [
     new charts.ArcLabelDecorator(
-    labelPosition: charts.ArcLabelPosition.outside)
+    labelPosition: charts.ArcLabelPosition.inside)
     ])
     ),
-    height: 200.0,
-    width: 200.0,
+    height: 220.0,
+    width: 220.0,
 
              ),
 

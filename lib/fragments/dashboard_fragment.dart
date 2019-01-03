@@ -92,8 +92,6 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
 
                         }
 
-
-
                       });
 
 
@@ -137,7 +135,7 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
                         if (_allColor == Colors.black26) {
                           _defultColor = Colors.black26;
                           _allColor = Colors.blue;
-                          fetchPost("");
+                          fetchPostAll();
                         }
                       });
 //                  showDialog(
@@ -368,8 +366,13 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
             ],
           ),
           new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new DonutPieChart(),
+              new Container(
+
+                child:  new DonutPieChart(),
+              ),
+
 
             ],
 
@@ -463,6 +466,65 @@ class DhshBoardFragmentState extends State<DhshBoardFragment> {
 //    });
 
     http.Response response = await http.post("http://123.49.33.106/dhaka_wasa/admin/dashboard", body: {'warehouse_id': warehouse_id}); // post api call
+    if (response.statusCode == 200) {
+
+      // If the call to the server was successful, parse the JSON
+      final DashBoardResponse data = DashBoardResponse.fromJson(json.decode(response.body));
+
+
+
+      setState(() {
+        //_progressBarActive == false;
+        purches = data.data.total_purchase_order;
+        stock = data.data.total_stock_value;
+        gatepass = data.data.total_gate_pass;
+      });
+
+//      return showDialog(
+//        context: context,
+//        builder: (context) {
+//          return AlertDialog(
+//            // Retrieve the text the user has typed in using our
+//            // TextEditingController
+//            content: Text(purches),
+//          );
+//        },
+//      );
+
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<DashBoardResponse> fetchPostAll() async {
+
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('no connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // Retrieve the text the user has typed in using our
+            // TextEditingController
+            content: Text("No Internet Connection!"),
+          );
+        },
+      );
+    }
+
+    _onLoading();
+
+//    setState(() {
+//      _progressBarActive == false;
+//    });
+
+    http.Response response = await http.post("http://123.49.33.106/dhaka_wasa/admin/dashboard", body: {}); // post api call
     if (response.statusCode == 200) {
 
       // If the call to the server was successful, parse the JSON
